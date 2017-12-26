@@ -1,0 +1,19 @@
+---
+# tasks file for confluent
+- name: Import RPM Key
+  rpm_key:
+    state: present
+    key: http://packages.confluent.io/rpm/3.3/archive.key
+
+- name: Import yum repo
+  copy:
+    src: confluent.repo
+    dest: /etc/yum.repos.d/
+    owner: root
+    group: root
+
+- name: Install Confluent 3.3.0
+  yum:
+     name: confluent-platform-2.11
+     state: present
+     update_cache: true

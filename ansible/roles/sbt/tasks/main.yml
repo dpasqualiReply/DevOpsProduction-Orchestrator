@@ -1,0 +1,30 @@
+---
+# tasks file for sbt
+- name: Install Wget
+  yum:
+     name: wget
+     state: latest
+     update_cache: true
+
+- name: Install cURL
+  yum:
+     name: curl
+     state: latest
+     update_cache: true
+
+- name: Install JDK
+  yum:
+     name: java-1.8.0-openjdk
+     state: present
+
+
+- name: Donwload SBT
+  get_url:
+     url: http://dl.bintray.com/sbt/rpm/sbt-0.13.12.rpm
+     dest: /opt/sbt-0.13.12.rpm
+     mode: 0440
+
+- name: Install SBT
+  yum:
+     name: /opt/sbt-0.13.12.rpm
+     state: present

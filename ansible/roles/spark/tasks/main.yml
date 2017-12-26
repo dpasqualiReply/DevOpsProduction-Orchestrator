@@ -1,0 +1,36 @@
+---
+# tasks file for spark
+#- name: Copy Spark
+#  copy:
+#    src: spark-2.2.0-bin-hadoop2.7.tgz
+#    dest: /opt/
+#    owner: root
+#    group: root  
+
+- name: Donwload Spark
+  get_url:
+     url: http://mirror.nohup.it/apache/spark/spark-2.2.0/spark-2.2.0-bin-hadoop2.7.tgz
+     dest: /opt/sbt-0.13.12.rpm
+     mode: 0440
+
+- name: Extract Spark tgz
+  unarchive:
+    src: /opt/spark-2.2.0-bin-hadoop2.7.tgz
+    dest: /opt/
+
+- name: Export Spark home
+  lineinfile:
+    path: /etc/profile
+    state: present
+    insertafter: EOF
+    line: 'export SPARK_HOME=/opt/spark-2.2.0-bin-hadoop2.7'
+
+- name: Export Path
+  lineinfile:
+    path: /etc/profile
+    state: present
+    insertafter: EOF
+    line: 'export PATH=$PATH:$SPARK_HOME/bin'
+
+- name: Source evn variables
+  shell: "source /etc/profile"

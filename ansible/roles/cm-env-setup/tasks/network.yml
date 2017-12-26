@@ -1,0 +1,40 @@
+---
+
+# Disable IPv6
+
+- name: Configure network interface
+  lineinfile:
+    path: /etc/sysconfig/network-scripts/ifcfg-eth0
+    line: '{{ item }}'
+  with_items:
+    - ONBOOT=yes
+    - IPV4_FAILUER_FATAL=yes
+    - IPV6INIT=no
+
+- name: Disable IPv6 and memory swapping in system config file
+  lineinfile:
+    path: /etc/sysctl.conf
+    line: '{{ item }}'
+  with_items:
+    - net.ipv6.conf.all.disable_ipv6 = 1
+    - net.ipv6.conf.default.disable_ipv6 = 1
+    - net.ipv6.conf.lo.disable_ipv6 = 1
+    - vm.swappiness = 1
+  register: system_config_reload
+
+- name: Disable IPv6 in network config file
+  lineinfile:
+    path: /etc/sysconfig/network
+    line: '{{ item }}'
+  with_items:
+    - NETWORKING_IPV6=no
+    - IPV6INIT=no
+
+- name: Reload system config file
+  shell: "sysctl -p"
+  when: system_config_reload.changed
+
+- name: Restart network service
+  service:
+    name: network
+    state: restarted

@@ -1,0 +1,18 @@
+---
+# tasks file for cm-env-setup
+
+- name: Config users 
+  include_tasks: users.yml
+
+- name: Config network
+  include_tasks: network.yml
+
+- name: Config services
+  include_tasks: services.yml
+
+- name: debug
+  debug:
+    msg: "Manual reboot required"
+
+#- include_tasks: reboot.yml
+#  when: selinux_disabled

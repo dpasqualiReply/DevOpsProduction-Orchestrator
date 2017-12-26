@@ -1,0 +1,18 @@
+---
+# tasks file for cloudera
+
+- name: Config Environment
+  include_role: 
+    name: cm-env-setup
+
+- name: Setup rpository
+  include_role:
+    name: cm-repo
+
+- name: Install Oracle Java
+  include_role:
+    name: oracle-java
+
+- name: Install Cloudera Manager with Path B
+  include_role:
+    name: cm-install-path-b

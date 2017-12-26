@@ -1,2 +1,7 @@
 [local]
 127.0.0.1
+
+[worker]
+tf-compute-1 ansible_ssh_user=dario_pasquali93 ansible_ssh_pass=password
+
+

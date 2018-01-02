@@ -18,19 +18,28 @@
     src: /opt/spark-2.2.0-bin-hadoop2.7.tgz
     dest: /opt/
 
+- name: Ensure Export file exists
+  copy:
+    content: ""
+    dest: /etc/profile.d/exports.sh
+    force: no
+    group: root
+    owner: root
+    mode: 0555
+
 - name: Export Spark home
   lineinfile:
-    path: /etc/profile
+    path: /etc/profile.d/exports.sh
     state: present
     insertafter: EOF
     line: 'export SPARK_HOME=/opt/spark-2.2.0-bin-hadoop2.7'
 
 - name: Export Path
   lineinfile:
-    path: /etc/profile
+    path: /etc/profile.d/exports.sh
     state: present
     insertafter: EOF
     line: 'export PATH=$PATH:$SPARK_HOME/bin'
 
 - name: Source evn variables
-  shell: "source /etc/profile"
+  shell: "source /etc/profile.d/exports.sh"

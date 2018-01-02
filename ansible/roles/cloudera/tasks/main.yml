@@ -5,7 +5,7 @@
   include_role: 
     name: cm-env-setup
 
-- name: Setup rpository
+- name: Setup repository
   include_role:
     name: cm-repo
 

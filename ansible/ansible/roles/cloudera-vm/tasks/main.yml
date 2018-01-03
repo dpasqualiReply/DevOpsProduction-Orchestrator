@@ -1,0 +1,22 @@
+---
+# tasks file for cloudera-vm
+
+- name: Cloudera Manager
+  include_role:
+    name: cloudera
+
+- name: Init DB and DBFeeder
+  include_tasks: init_db.yml
+
+- name: Create Batch ETL dir
+  file:
+    path: /opt/devops/batch_etl
+    owner: root
+    group: root
+    mode: 0644
+    state: directory
+
+- name: Change root password
+  user:
+    name: root
+    password: "{{ root_passwd }}"

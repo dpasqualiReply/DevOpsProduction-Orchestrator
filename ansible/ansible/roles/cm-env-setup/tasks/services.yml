@@ -1,0 +1,49 @@
+---
+
+- name: disable SELINUX
+  lineinfile:
+    path: /etc/selinux/config
+    regexp: '^SELINUX='
+    line: 'SELINUX=disabled'
+  register: selinux_disabled
+
+- include_tasks: reboot.yml
+  when: selinux_disabled.changed
+
+- name: Disable useless services
+  service:
+    name: '{{ item }}'
+    state: stopped
+    enabled: no
+  ignore_errors: yes
+  with_items:
+    #- cups
+    - postfix
+
+
+- name: Disable paging and memory swapping
+  lineinfile:
+    path: /etc/rc.local
+    line: '{{ item }}'
+  with_items:
+    - echo never > /sys/kernel/mm/redhat_transparent_hugepage/defrag
+    - echo never > /sys/kernel/mm/redhat_transparent_hugepage/enabled
+
+
+- name: Make rc.local runnable
+  file:
+    path: /etc/rc.d/rc.local
+    state: touch
+    mode: 0777
+
+- name: Stop firewalld
+  service:
+    name: firewalld
+    state: stopped
+
+
+- name: Disable firewalld
+  service:
+    name: firewalld
+    enabled: no
+  ignore_errors: yes

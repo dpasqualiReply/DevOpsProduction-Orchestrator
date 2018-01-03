@@ -1,0 +1,9 @@
+---
+# tasks file for oracle-java
+
+- name: Install Oracle JDK
+  yum: name={{ item }} state=latest update_cache=yes
+  with_items:
+    - oracle-j2sdk1.7
+    - unzip
+

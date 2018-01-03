@@ -1,0 +1,4 @@
+---
+# defaults file for cm-env-setup
+
+ansible_user_id: dario_pasquali93

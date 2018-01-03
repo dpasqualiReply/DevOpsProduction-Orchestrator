@@ -1,0 +1,33 @@
+---
+# tasks file for cm-install-path-b
+
+- name: Install Cloudera Manager Daemons
+  yum:
+    name: cloudera-manager-daemons
+    state: installed
+  
+- name: Install Cloudera Manager Server
+  yum:
+    name: cloudera-manager-server
+    state: installed
+
+- name: Install Embedded PostgreSQL DB
+  yum:
+    name: cloudera-manager-server-db-2
+    state: installed
+
+- name: Ensure Postgres DB service is running and start on boot
+  service:
+    name: cloudera-scm-server-db
+    state: started
+    enabled: yes
+
+- name: Ensure Cloudera Manager service is running and start on boot
+  service:
+    name: cloudera-scm-server
+    state: started
+    enabled: yes
+
+- name: Work in Progress
+  debug:
+    msg: "Continue the installation on http://<host>:7180 make sure port is open"

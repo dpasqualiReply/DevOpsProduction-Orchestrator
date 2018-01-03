@@ -1,0 +1,11 @@
+
+- hosts: local
+  connection: local
+  become: yes
+  become_user: root
+  roles:
+  #  - sbt
+  #  - confluent
+  #  - spark
+  #  - jenkins
+     - cloudera

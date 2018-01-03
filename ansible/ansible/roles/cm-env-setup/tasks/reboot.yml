@@ -1,0 +1,32 @@
+---
+
+- name: Manual stop instance
+  local_action: shell gcloud compute instances stop {{ inventory_hostname }} --zone=us-east1-b
+
+- name: Manual start instance
+  local_action: shell gcloud compute instances start {{ inventory_hostname }} --zone=us-east1-b
+
+- name: Wait for machine to restart
+  local_action:
+    module: wait_for
+      host={{ inventory_hostname }}
+      port=22
+      delay=15
+      timeout=300
+      state=started
+  become: false
+
+#- name: Pause to create new connection
+#  pause:
+#    seconds: 60
+
+#- name: Wait for it, PING
+#  local_action: shell ansible -u {{ ansible_user_id }} -m ping {{ inventory_hostname }}
+#  register: result
+#  until:
+#    - result.rc == 0
+#  retries: 30
+#  delay: 10
+
+- name: Set Uptime
+  shell: uptime

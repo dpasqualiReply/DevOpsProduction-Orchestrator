@@ -1,0 +1,64 @@
+---
+# tasks file for movielens-init
+
+- name: Install python devl
+  yum:
+    name: python-devel
+    state: latest
+
+- name: Install python pip
+  yum:
+    name: python-pip
+    state: latest
+
+- name: Install git
+  yum:
+    name: git
+    state: latest
+
+- name: Install psycopg2
+  pip:
+    name: psycopg2
+
+- name: clone DBFeeder Repository
+  git:
+    repo: https://github.com/dpasqualiReply/DevOpsProduction-DBFeeder.git
+    dest: /opt/DBFeeder
+    force: yes
+
+- name: donwload Movielens M20 Dataset
+  get_url:
+     url:   http://files.grouplens.org/datasets/movielens/ml-20m.zip
+     dest: /opt/ml-20m.zip
+     mode: 0440
+
+- name: Extract Movielens m20
+  unarchive:
+    src: /opt/ml-20m.zip
+    dest: /opt/
+
+- name: Ensure Export file exists
+  copy:
+    content: "#!/bin/bash"
+    dest: /etc/profile.d/exports.sh
+    force: no
+    group: root
+    owner: root
+    mode: 0555
+
+- name: Export Movielens m20 Path
+  lineinfile:
+    path: /etc/profile.d/exports.sh
+    state: present
+    insertafter: EOF
+    line: 'export M20_PATH=/opt/ml-20m'
+
+- name: Export DBFeeder HOME
+  lineinfile:
+    path: /etc/profile.d/exports.sh
+    state: present
+    insertafter: EOF
+    line: 'export DBFEEDER_HOME=/opt/DBFeeder'
+
+- name: Source evn variables
+  shell: /etc/profile.d/exports.sh

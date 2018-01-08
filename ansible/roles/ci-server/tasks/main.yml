@@ -12,3 +12,7 @@
 - name: Install Jenkins Blue Ocean
   include_role:
     name: jenkins
+
+- name: setup default folders
+  include_role:
+    name: devops-folders

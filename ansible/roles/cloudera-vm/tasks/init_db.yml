@@ -9,11 +9,18 @@
   shell: head -1 /var/lib/cloudera-scm-server-db/data/generated_password.txt
   register: password
 
-- debug:
-    msg: "{{ password['stdout'] }}"
+#- debug:
+#    msg: "{{ password['stdout'] }}"
 
-- name: initialize database
-  command: sudo -i python $DBFEEDER_HOME/DBFeeder.py --init --datasets=$M20_PATH --psql_user=cloudera-scm --psql_password="{{ password['stdout'] }}"
+- name: locally store password to configure JDBC connector
+  local_action:
+    module: copy
+    content: "{{ password['stdout'] }}"
+    dest: /opt/ansible/cloudera_psql_passwd.txt
+    force: yes
+    group: root
+    owner: root
+    mode: 0555
 
 - name: Schedule DBFeeder daily
   cron:
@@ -21,4 +28,32 @@
     user: root
     special_time: daily
     job: python $DBFEEDER_HOME/DBFeeder.py --fraction=0.001 --datasets=$M20_PATH --psql_user=cloudera-scm --psql_password="{{ password['stdout'] }}"
-  
+  register: first_run
+
+- name: initialize database
+  command: sudo -i python $DBFEEDER_HOME/DBFeeder.py --init --datasets=$M20_PATH --psql_user=cloudera-scm --psql_password="{{ password['stdout'] }}"
+  when: first_run.changed
+
+- name: Schedule genome tags ingestion with sqoop
+  cron:
+    name: "Ingest Genome Tags"
+    user: root
+    special_time: daily
+    job:  sudo -u hdfs sqoop import --connect 'jdbc:postgresql://localhost:7432/postgres?ssl=false' --username 'cloudera-scm' -P --password '"{{ password['stdout'] }}' --table 'genometags' --hive-table 'datalake.genometags' --hive-import  --check-column id --append
+  when: first_run.changed
+
+- name: Schedule movies ingestion with sqoop
+  cron: 
+    name: "Ingest Movies"
+    user: root
+    special_time: daily
+    job:  sudo -u hdfs sqoop import --connect 'jdbc:postgresql://localhost:7432/postgres?ssl=false' --username 'cloudera-scm' -P --password '"{{ password['stdout'] }}' --table 'movies' --hive-table 'datalake.movies' --hive-import  --check-column id --append
+  when: first_run.changed 
+
+- name: Schedule links ingestion with sqoop
+  cron: 
+    name: "Ingest Links"
+    user: root
+    special_time: daily
+    job:  sudo -u hdfs sqoop import --connect 'jdbc:postgresql://localhost:7432/postgres?ssl=false' --username 'cloudera-scm' -P --password '"{{ password['stdout'] }}' --table 'links' --hive-table 'datalake.links' --hive-import  --check-column id --append
+  when: first_run.changed  

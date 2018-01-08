@@ -10,9 +10,4 @@
 - name: Config services
   include_tasks: services.yml
 
-- name: debug
-  debug:
-    msg: "Manual reboot required"
 
-#- include_tasks: reboot.yml
-#  when: selinux_disabled

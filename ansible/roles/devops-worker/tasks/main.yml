@@ -13,37 +13,9 @@
   include_role:
     name: confluent
 
-- name: Create Real Time ML dir
-  file:
-    path: /opt/devops/realtime_ml
-    owner: root
-    group: root
-    mode: 0644
-    state: directory
-
-- name: Create Real Time ETL dir
-  file:
-    path: /opt/devops/realtime_etl
-    owner: root
-    group: root
-    mode: 0644
-    state: directory
-
-- name: Create Batch ML dir
-  file:
-    path: /opt/devops/batch_ml
-    owner: root
-    group: root
-    mode: 0644
-    state: directory
-
-- name: Create Real Time ML dir
-  file:
-    path: /opt/devops/realtime_ml
-    owner: root
-    group: root
-    mode: 0644
-    state: directory
+- name: Setup Kafka JDBC Source connector
+  include_role:
+    name: kafka-jdbc-connector
 
 - name: Set hive-site.xml
   copy:
@@ -52,4 +24,8 @@
     owner: root
     group: root
     mode: 0644
+  become: true
+  become_flags: '-i'
 
+- name: setup folders
+  include_tasks: folders.yml

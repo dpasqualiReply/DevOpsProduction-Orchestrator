@@ -1,7 +1,0 @@
-- hosts: all
-  #hosts: worker
-  #connection: local
-  become: yes
-  become_user: root
-  roles:
-    - ci-server

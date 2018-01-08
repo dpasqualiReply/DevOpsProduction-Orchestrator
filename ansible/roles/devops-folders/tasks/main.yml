@@ -1,0 +1,18 @@
+---
+# tasks file for devops-folders
+
+- name: Create config folder
+  file:
+    path: /opt/conf
+    owner: jenkins
+    group: jenkins
+    mode: 0644
+    state: directory
+
+- name: Create model folder
+  file:
+    path: /opt/devops_proc/model
+    owner: jenkins
+    group: jenkins
+    mode: 0644
+    state: directory

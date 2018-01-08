@@ -1,0 +1,45 @@
+---
+# tasks file for kafka-jdbc-connector
+
+- name: Install git
+  yum:
+    name: git
+    state: latest
+
+- name: clone Kafka JDBC Source Repository
+  git:
+    repo: https://github.com/dpasqualiReply/DevOpsProduction-KafkaJDBCSource.git
+    dest: /opt/kafka-JDBC-connector
+    force: yes
+
+- name: Ensure Export file exists
+  copy:
+    content: "#!/bin/bash"
+    dest: /etc/profile.d/exports.sh
+    force: no
+    group: root
+    owner: root
+    mode: 0555
+
+- name: Export Kafka JDBC Connector Path
+  lineinfile:
+    path: /etc/profile.d/exports.sh
+    state: present
+    insertafter: EOF
+    line: 'export KAFKA_JDBC_HOME=/opt/kafka-JDBC-connector'
+
+- name: Source evn variables
+  shell: /etc/profile.d/exports.sh
+
+- name: Read generated cloudera-scm password
+  local_action: shell head -1 /opt/ansible/cloudera_psql_passwd.txt
+  register: password
+
+- debug:
+    msg: "{{ password['stdout'] }}"
+
+- name: Setup postgreSQL user and password
+  lineinfile:
+    path: /opt/kafka-JDBC-connector/config/source-quickstart-sqlite.properties
+    regexp: '^connection.url=jdbc:postgresql:'
+    line: connection.url=jdbc:postgresql://cloudera-vm:7432/postgres?user=cloudera-scm&password="{{ password['stdout'] }}"&ssl==false

@@ -42,4 +42,4 @@
     line: 'export PATH=$PATH:$SPARK_HOME/bin'
 
 - name: Source evn variables
-  shell: "source /etc/profile.d/exports.sh"
+  shell: /etc/profile.d/exports.sh

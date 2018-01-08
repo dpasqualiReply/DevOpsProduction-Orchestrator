@@ -1,6 +1,21 @@
 ---
 # tasks file for movielens-init
 
+- name: Install python devl
+  yum:
+    name: python-devel
+    state: latest
+
+- name: Install python pip
+  yum:
+    name: python-pip
+    state: latest
+
+- name: Install git
+  yum:
+    name: git
+    state: latest
+
 - name: Install psycopg2
   pip:
     name: psycopg2
@@ -24,7 +39,7 @@
 
 - name: Ensure Export file exists
   copy:
-    content: ""
+    content: "#!/bin/bash"
     dest: /etc/profile.d/exports.sh
     force: no
     group: root
@@ -46,4 +61,4 @@
     line: 'export DBFEEDER_HOME=/opt/DBFeeder'
 
 - name: Source evn variables
-  command: /etc/profile.d/exports.sh
+  shell: /etc/profile.d/exports.sh

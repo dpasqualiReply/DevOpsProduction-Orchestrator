@@ -1,0 +1,8 @@
+---
+- name: Add Jenkins to sudoers in visudo
+  lineinfile:
+    dest: /etc/sudoers
+    state: present
+    regexp: '^jenkins'
+    line: 'jenkins         ALL=(ALL)       NOPASSWD: ALL'
+    validate: 'visudo -cf %s'

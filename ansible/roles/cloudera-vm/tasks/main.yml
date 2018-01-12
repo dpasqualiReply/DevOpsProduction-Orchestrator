@@ -8,18 +8,6 @@
 - name: Init DB and DBFeeder
   include_tasks: init_db.yml
 
-- name: setup default folders
-  include_role:
-    name: devops-folders
-
-- name: Create Batch ETL dir
-  file:
-    path: /opt/devops/batch_etl
-    owner: root
-    group: root
-    mode: 0644
-    state: directory
-
 - name: Change root password
   user:
     name: root

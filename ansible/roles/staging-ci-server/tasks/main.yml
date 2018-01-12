@@ -1,10 +1,6 @@
 ---
 # tasks file for staging-ci-server
 
-- name: Install Cloudera VM components
-  include_role:
-    name: cloudera-vm
-
 - name: Install DevOps Worker components
   include_role:
     name: devops-worker

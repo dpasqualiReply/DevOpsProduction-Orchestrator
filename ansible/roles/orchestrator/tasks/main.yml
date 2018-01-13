@@ -1,0 +1,18 @@
+---
+# tasks file for orchestrator
+
+- name: Install Ansible
+  include_role:
+    name: ansible
+
+- name: Install Terraform
+  include_role:
+    name: terraform
+
+- name: clone Orchestrator Repository
+  git:
+    repo: https://github.com/dpasqualiReply/DevOpsProduction-Orchestrator.git
+    dest: /opt/DevOpsProduction-Orchestrator
+    force: yes
+
+

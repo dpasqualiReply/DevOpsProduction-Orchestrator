@@ -1,0 +1,10 @@
+
+- hosts: all
+  #hosts: worker
+  #connection: local
+  become: yes
+  become_user: root
+  roles:
+    - devops-worker
+    - ci-server
+    - orchestrator

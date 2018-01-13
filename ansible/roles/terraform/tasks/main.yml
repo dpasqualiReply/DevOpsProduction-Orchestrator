@@ -7,6 +7,17 @@
      dest: /opt/terraform_0.11.2_linux_amd64.zip
      mode: 0440
 
+- name: Make sure terraform home dir exists
+  file:
+    path: /etc/terraform
+    state: directory
+    mode: 0755
+
+- name: Make sure unzip is installed
+  yum:
+    name: uzip
+    state: latest
+
 - name: Extract terraform zip
   unarchive:
     src: /opt/terraform_0.11.2_linux_amd64.zip

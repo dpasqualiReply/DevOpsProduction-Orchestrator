@@ -26,7 +26,7 @@
 
 - name: Create Batch ETL  dir
   file:
-    path: /opt/devops/batch_ml
+    path: /opt/devops/batch_etl
     owner: root
     group: root
     mode: 0644

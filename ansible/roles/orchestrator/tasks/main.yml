@@ -16,6 +16,7 @@
     force: yes
 
 - name: Ensure ssh config file exists
+  file:
     path: /root/.ssh/config
     owner: foo
     group: foo

@@ -9,10 +9,10 @@
   include_role:
     name: terraform
 
-- name: clone Orchestrator Repository
-  git:
-    repo: https://github.com/dpasqualiReply/DevOpsProduction-Orchestrator.git
-    dest: /opt/DevOpsProduction-Orchestrator
-    force: yes
+#- name: clone Orchestrator Repository
+#  git:
+#    repo: https://github.com/dpasqualiReply/DevOpsProduction-Orchestrator.git
+#    dest: /opt/DevOpsProduction-Orchestrator
+#    force: yes
 
 

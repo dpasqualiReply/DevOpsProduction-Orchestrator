@@ -20,7 +20,7 @@
 - name: Set hive-site.xml
   copy:
     src: hive-site.xml
-    dest: $SPARK_HOME/conf/hive-site.xml
+    dest: /opt/spark-2.2.0-bin-hadoop2.7/conf/hive-site.xml
     owner: root
     group: root
     mode: 0644

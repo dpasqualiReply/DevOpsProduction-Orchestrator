@@ -15,7 +15,7 @@
 
 - name: Make sure unzip is installed
   yum:
-    name: uzip
+    name: unzip
     state: latest
 
 - name: Extract terraform zip

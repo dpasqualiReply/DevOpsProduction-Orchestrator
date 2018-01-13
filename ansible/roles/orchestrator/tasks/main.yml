@@ -16,7 +16,6 @@
     group: root
     mode: 0644
 
-
 - name: Disable SHH known host check
   lineinfile:
     dest: /root/.ssh/config

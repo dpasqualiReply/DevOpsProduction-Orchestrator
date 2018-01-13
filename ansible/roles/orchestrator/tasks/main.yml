@@ -9,23 +9,17 @@
   include_role:
     name: terraform
 
-- name: clone Orchestrator Repository
-  git:
-    repo: https://github.com/dpasqualiReply/DevOpsProduction-Orchestrator.git
-    dest: /opt/DevOpsProduction-Orchestrator
-    force: yes
-
 - name: Ensure ssh config file exists
   file:
     path: /root/.ssh/config
-    owner: foo
-    group: foo
+    owner: root
+    group: root
     mode: 0644
 
 
 - name: Disable SHH known host check
   lineinfile:
-  dest: /root/.ssh/config
+    dest: /root/.ssh/config
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"
   with_items:

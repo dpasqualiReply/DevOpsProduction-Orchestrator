@@ -1,0 +1,39 @@
+---
+# tasks file for terraform
+
+- name: Download terraform zip
+  get_url:
+     url: https://releases.hashicorp.com/terraform/0.11.2/terraform_0.11.2_linux_amd64.zip?_ga=2.83374678.1576123255.1515791880-1978085164.1514109921
+     dest: /opt/terraform_0.11.2_linux_amd64.zip
+     mode: 0440
+
+- name: Extract terraform zip
+  unarchive:
+    src: /opt/terraform_0.11.2_linux_amd64.zip
+    dest: /opt/terraform/
+
+- name: Ensure Export file exists
+  copy:
+    content: ""
+    dest: /etc/profile.d/exports.sh
+    force: no
+    group: root
+    owner: root
+    mode: 0555
+
+- name: Export Terraform home
+  lineinfile:
+    path: /etc/profile.d/exports.sh
+    state: present
+    insertafter: EOF
+    line: 'export TERRAFORM_HOME=/opt/terraform'
+
+- name: Export Path
+  lineinfile:
+    path: /etc/profile.d/exports.sh
+    state: present
+    insertafter: EOF
+    line: 'export PATH=$PATH:$$TERRAFORM_HOME'
+
+- name: Source evn variables
+  shell: /etc/profile.d/exports.sh

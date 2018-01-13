@@ -15,9 +15,16 @@
     dest: /opt/DevOpsProduction-Orchestrator
     force: yes
 
+- name: Ensure ssh config file exists
+    path: /root/.ssh/config
+    owner: foo
+    group: foo
+    mode: 0644
+
+
 - name: Disable SHH known host check
   lineinfile:
-  dest: /.ssh/config
+  dest: /root/.ssh/config
     regexp: "{{ item.regexp }}"
     line: "{{ item.line }}"
   with_items:

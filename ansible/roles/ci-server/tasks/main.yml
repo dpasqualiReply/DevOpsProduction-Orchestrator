@@ -31,7 +31,7 @@
 
 - name: Create depoy realtimeETL
   file:
-    path: /opt/deploy/realtimeETL
+    path: /opt/deploy/realTimeETL
     owner: jenkins
     group: jenkins
     mode: 0644

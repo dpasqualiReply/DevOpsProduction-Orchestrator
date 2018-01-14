@@ -34,12 +34,31 @@
   command: sudo -i python $DBFEEDER_HOME/DBFeeder.py --init --datasets=$M20_PATH --psql_user=cloudera-scm --psql_password="{{ password['stdout'] }}"
   when: first_run.changed
 
+- name: export HADOOP_USER_NAME
+  lineinfile:
+    path: /etc/profile.d/exports.sh
+    state: present
+    insertafter: EOF
+    line: 'export HADOOP_USER_NAME=hdfs'
+
+- name: Download postgresql driver
+  get_url:
+    url: http://jdbc.postgresql.org/download/postgresql-9.2-1002.jdbc4.jar
+    dest: /opt/postgresql-9.2-1002.jdbc4.jar
+    mode: 0440
+
+- name: Copy Postgresql driver to sqoop var directory
+  copy:
+   src: /opt/postgresql-9.2-1002.jdbc4.jar
+   dest: /var/lib/sqoop/postgresql-9.2-1002.jdbc4.jar
+   remote_src: yes
+
 - name: Schedule genome tags ingestion with sqoop
   cron:
     name: "Ingest Genome Tags"
     user: root
     special_time: daily
-    job:  sudo -u hdfs sqoop import --connect 'jdbc:postgresql://localhost:7432/postgres?ssl=false' --username 'cloudera-scm' -P --password '"{{ password['stdout'] }}' --table 'genometags' --hive-table 'datalake.genometags' --hive-import  --check-column id --append
+    job:  sudo sqoop import --connect 'jdbc:postgresql://localhost:7432/postgres' --username 'cloudera-scm' --password '"{{ password['stdout'] }}' --table 'genometags' --hive-table 'datalake.genometags' --hive-import  --check-column id --append --incremental 'append'
   when: first_run.changed
 
 - name: Schedule movies ingestion with sqoop
@@ -47,7 +66,7 @@
     name: "Ingest Movies"
     user: root
     special_time: daily
-    job:  sudo -u hdfs sqoop import --connect 'jdbc:postgresql://localhost:7432/postgres?ssl=false' --username 'cloudera-scm' -P --password '"{{ password['stdout'] }}' --table 'movies' --hive-table 'datalake.movies' --hive-import  --check-column id --append
+    job:  sudo sqoop import --connect 'jdbc:postgresql://localhost:7432/postgres' --username 'cloudera-scm' --password '"{{ password['stdout'] }}' --table 'movies' --hive-table 'datalake.movies' --hive-import  --check-column id --append --incremental 'append'
   when: first_run.changed 
 
 - name: Schedule links ingestion with sqoop
@@ -55,5 +74,5 @@
     name: "Ingest Links"
     user: root
     special_time: daily
-    job:  sudo -u hdfs sqoop import --connect 'jdbc:postgresql://localhost:7432/postgres?ssl=false' --username 'cloudera-scm' -P --password '"{{ password['stdout'] }}' --table 'links' --hive-table 'datalake.links' --hive-import  --check-column id --append
+    job: sudo sqoop import --connect 'jdbc:postgresql://localhost:7432/postgres' --username 'cloudera-scm' --password '"{{ password['stdout'] }}' --table 'links' --hive-table 'datalake.links' --hive-import  --check-column id --append --incremental 'append'
   when: first_run.changed  

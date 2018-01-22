@@ -1,4 +1,7 @@
 *.tfstate.backup
 *.backup
 *.retry
+<<<<<<< HEAD
 data/
+=======
+>>>>>>> a7f5bb05eab7e16b355046dd89612b2ebe0423d2

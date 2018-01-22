@@ -2,7 +2,7 @@
 Description=Prometheus Pushgateway
 
 [Service]
-ExecStart=/opt/monitoring/pushgateway-0.4.0.linux-arm64/pushgateway
+ExecStart=/opt/monitoring/pushgateway-0.4.0.linux-amd64/pushgateway
 
 [Install]
 WantedBy=default.target

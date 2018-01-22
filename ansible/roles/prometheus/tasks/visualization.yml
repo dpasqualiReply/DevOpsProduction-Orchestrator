@@ -30,5 +30,5 @@
 - name: Ensure Grafana server service running and starts on boot
   service:
     name: grafana-server
-    state: started
+    state: restarted
     enabled: yes

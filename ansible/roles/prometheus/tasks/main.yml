@@ -36,7 +36,7 @@
 - name: Ensure prometheus starts and run on startup
   service:
     name: prometheus
-    state: started
+    state: restarted
     enabled: yes
 
 - include_tasks: visualization.yml

@@ -28,5 +28,5 @@
 - name: Ensure node_exporter starts and run on startup
   service:
     name: node_exporter
-    state: started
+    state: restarted
     enabled: yes  

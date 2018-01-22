@@ -3,4 +3,6 @@
   become: yes
   become_user: root
   roles:
+    - prometheus
+    - prometheus-node-exporter
     - prometheus-pushgateway

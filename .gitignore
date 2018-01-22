@@ -1,3 +1,4 @@
 *.tfstate.backup
 *.backup
 *.retry
+data/

@@ -6,3 +6,5 @@
   become_user: root
   roles:
     - devops-worker
+    - prometheus-node-exporter
+    - prometheus-pushgateway

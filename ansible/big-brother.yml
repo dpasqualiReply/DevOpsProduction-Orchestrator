@@ -8,3 +8,6 @@
     - devops-worker
     - ci-server
     - orchestrator
+    - prometheus
+    - prometheus-node-exporter
+    - prometheus-pushgateway

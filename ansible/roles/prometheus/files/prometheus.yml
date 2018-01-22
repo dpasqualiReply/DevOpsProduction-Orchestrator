@@ -1,0 +1,5 @@
+scrape_configs:
+  - job_name: "node"
+    scrape_interval: "10s"
+    static_configs:
+    - targets: ['big-brother:9100', 'big-brother:9091', 'devops-worker:9100', 'devops-worker:9091']

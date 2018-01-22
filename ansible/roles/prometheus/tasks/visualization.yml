@@ -1,0 +1,34 @@
+- name: Install Wget
+  yum:
+     name: wget
+     state: latest
+     update_cache: true
+
+- name: Install initstripts
+  yum:
+     name: initscripts
+     state: latest
+     update_cache: true
+
+- name: Install fontconfig
+  yum:
+     name: fontconfig
+     state: latest
+     update_cache: true
+
+- name: Download Grafana RPM
+  get_url:
+     url:  https://s3-us-west-2.amazonaws.com/grafana-releases/release/grafana-4.6.3-1.x86_64.rpm
+     dest: /opt/grafana-4.6.3-1.x86_64.rpm
+     mode: 0440
+
+- name: Install Grafana from RPM
+  yum:
+    name: /opt/grafana-4.6.3-1.x86_64.rpm
+    state: present
+
+- name: Ensure Grafana server service running and starts on boot
+  service:
+    name: grafana-server
+    state: started
+    enabled: yes

@@ -1,0 +1,8 @@
+[Unit]
+Description=Node Exporter
+
+[Service]
+ExecStart=/opt/monitoring/prometheus-2.1.0.linux-amd64/prometheus --config.file=/opt/monitoring/prometheus-2.1.0.linux-amd64/prometheus.yml --web.console.templates=/opt/monitoring/prometheus-2.1.0.linux-amd64/consoles --web.console.libraries=/opt/monitoring/prometheus-2.1.0.linux-amd64/console_libraries
+
+[Install]
+WantedBy=default.target

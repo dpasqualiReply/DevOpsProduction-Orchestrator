@@ -1,0 +1,42 @@
+---
+# tasks file for prometheus
+
+- name: Donwload Prometheus
+  get_url:
+     url: https://github.com/prometheus/prometheus/releases/download/v2.1.0/prometheus-2.1.0.linux-amd64.tar.gz
+     dest: /opt/prometheus.tar.gz
+     mode: 0440
+
+- name: Create monitoring folder
+  file:
+    path: /opt/monitoring
+    state: directory
+    mode: 0755
+
+- name: Extract Prometheus archive
+  unarchive:
+    src: /opt/prometheus.tar.gz
+    dest: /opt/monitoring/
+
+- name: Copy prometheus service file
+  copy:
+    src: prometheus.service
+    dest: /etc/systemd/system/
+    owner: root
+    group: root
+
+- name: Copy prometheus config file
+  copy:
+    src: prometheus.yml
+    dest: /opt/monitoring/prometheus-2.1.0.linux-amd64/
+    owner: root
+    group: root
+    force: yes
+
+- name: Ensure prometheus starts and run on startup
+  service:
+    name: prometheus
+    state: started
+    enabled: yes
+
+- include_tasks: visualization.yml

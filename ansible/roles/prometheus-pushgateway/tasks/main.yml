@@ -1,0 +1,32 @@
+---
+# tasks file for prometheus-pushgateway
+
+- name: Download PushGateway binaries
+  get-url:
+    url: https://github.com/prometheus/pushgateway/releases/download/v0.4.0/pushgateway-0.4.0.linux-arm64.tar.gz
+    dest: /opt/pushgateway-0.4.0.linux-arm64.tar.gz
+    mode: 0440
+
+- name: Create monitoring folder
+  file:
+    path: /opt/monitoring
+    state: directory
+    mode: 0755
+
+- name: Extract Pushgateway archive
+  unarchive:
+    src: /opt/pushgateway-0.4.0.linux-arm64.tar.gz
+    dest: /opt/monitoring/
+
+- name: Copy pushgateway service file
+  copy:
+    src: pushgateway.service
+    dest: /etc/systemd/system/
+    owner: root
+    group: root
+
+- name: Ensure pushgateway starts and run on startup
+  service:
+    name: pushgateway
+    state: started
+    enabled: yes

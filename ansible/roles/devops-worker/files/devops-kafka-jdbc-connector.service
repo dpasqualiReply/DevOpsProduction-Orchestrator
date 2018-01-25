@@ -1,0 +1,10 @@
+[Unit]
+Description=Kafka JDBC Connector sensing movielens database
+After=network.target
+
+[Service]
+User=root
+ExecStart=/opt/kafka-JDBC-connector/run.sh
+
+[Install]
+WantedBy=default.target

@@ -1,0 +1,10 @@
+[Unit]
+Description=RealTime ETL for ratings Production
+After=network.target
+
+[Service]
+User=root
+ExecStart=/opt/spark-2.2.0-bin-hadoop2.7/bin/spark-submit --master local --class it.reply.data.pasquali.StreamMono /opt/devops/realtime_etl/RealTimeETL-assembly-0.1.jar psql-m20-ratings largest
+
+[Install]
+WantedBy=default.target

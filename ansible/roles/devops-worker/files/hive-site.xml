@@ -5,7 +5,7 @@
 <configuration>
   <property>
     <name>hive.metastore.uris</name>
-    <value>thrift://35.185.102.113:9083</value>
+    <value>thrift://cloudera-vm:9083</value>
   </property>
   <property>
     <name>dfs.client.use.datanode.hostname</name>

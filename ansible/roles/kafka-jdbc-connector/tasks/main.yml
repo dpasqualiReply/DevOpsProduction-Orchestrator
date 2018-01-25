@@ -12,6 +12,16 @@
     dest: /opt/kafka-JDBC-connector
     force: yes
 
+- name: Ensure Kafka run script is runable
+  file:
+    path: "{{ item }}"
+    mode: 0777
+  with_items:
+    - /opt/kafka-JDBC-connector/run.sh
+    - /opt/kafka-JDBC-connector/debugConsoleConsumer.sh
+    - /opt/kafka-JDBC-connector/deleteTopic.sh
+
+
 - name: Ensure Export file exists
   copy:
     content: "#!/bin/bash"

@@ -29,3 +29,6 @@
 
 - name: setup folders
   include_tasks: folders.yml
+
+- name: setup services
+  include_tasks: services.yml

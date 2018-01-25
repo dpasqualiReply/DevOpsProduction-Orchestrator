@@ -1,0 +1,14 @@
+---
+# tasks file for DevOps Worker Production services
+
+- name: Copy Production Service files
+  copy:
+    src: "{{ item }}"
+    dest: /etc/systemd/system/
+    owner: root
+    group: root
+  with_items:
+#    - devops-kafka-jdbc-connector.service
+     - devops-rtetl-ratings.service
+     - devops-rtetl-tags.service
+     - devops-rtml.service 

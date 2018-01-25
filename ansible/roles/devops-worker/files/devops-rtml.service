@@ -1,0 +1,10 @@
+[Unit]
+Description=RealTime Machine Learning Production
+After=network.target
+
+[Service]
+User=root
+ExecStart=/opt/spark-2.2.0-bin-hadoop2.7/bin/spark-submit --master local --class JettyLauncher /opt/devops/realtime_ml/RealTimeMovieRec-assembly-0.1.jar
+
+[Install]
+WantedBy=default.target

@@ -31,7 +31,7 @@
 
 - name: Create depoy realtimeETL
   file:
-    path: /opt/deploy/realTimeETL
+    path: /opt/deploy/realtime_etl
     owner: jenkins
     group: jenkins
     mode: 0644
@@ -39,7 +39,7 @@
 
 - name: Create depoy batchETL
   file:
-    path: /opt/deploy/batchETL
+    path: /opt/deploy/batch_etl
     owner: jenkins
     group: jenkins
     mode: 0644
@@ -47,7 +47,7 @@
 
 - name: Create depoy realtimeML
   file:
-    path: /opt/deploy/realTimeMovieRec
+    path: /opt/deploy/realtime_ml
     owner: jenkins
     group: jenkins
     mode: 0644
@@ -55,7 +55,7 @@
 
 - name: Create depoy batchML
   file:
-    path: /opt/deploy/mrSpark2
+    path: /opt/deploy/batch_ml
     owner: jenkins
     group: jenkins
     mode: 0644

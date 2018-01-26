@@ -1,0 +1,15 @@
+
+- hosts: all
+  #hosts: worker
+  #connection: local
+  become: yes
+  become_user: root
+  tasks:
+    - name: Deploy 
+      copy:
+        src: /opt/deploy/batchETL/BatchETL2-assembly-0.1.jar
+        dest: /opt/devops/batch_etl/
+        owner: root
+        group: root
+        mode: 0777
+        force: yes

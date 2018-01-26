@@ -1,0 +1,15 @@
+
+- hosts: all
+  #hosts: worker
+  #connection: local
+  become: yes
+  become_user: root
+  tasks:
+    - name: Deploy Real Time ETL in Production
+      copy:
+        src: /opt/deploy/realtime_etl/
+        dest: /opt/devops/realtime_etl/
+        owner: root
+        group: root
+        mode: 0777
+        force: yes

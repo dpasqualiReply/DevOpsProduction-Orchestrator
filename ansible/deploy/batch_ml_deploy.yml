@@ -1,0 +1,15 @@
+
+- hosts: all
+  #hosts: worker
+  #connection: local
+  become: yes
+  become_user: root
+  tasks:
+    - name: Deploy Batch ML in Production
+      copy:
+        src: /opt/deploy/batch_ml/
+        dest: /opt/devops/batch_ml/
+        owner: root
+        group: root
+        mode: 0777
+        force: yes

@@ -1,0 +1,15 @@
+
+- hosts: all
+  #hosts: worker
+  #connection: local
+  become: yes
+  become_user: root
+  tasks:
+    - name: Deploy Batch ETL Process in Production
+      copy:
+        src: /opt/deploy/batch_etl/
+        dest: /opt/devops/batch_etl/
+        owner: root
+        group: root
+        mode: 0777
+        force: yes

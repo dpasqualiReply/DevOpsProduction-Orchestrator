@@ -1,7 +1,7 @@
 
 - hosts: all
   #hosts: worker
-  connection: local
+  #connection: local
   become: yes
   become_user: root
   roles:

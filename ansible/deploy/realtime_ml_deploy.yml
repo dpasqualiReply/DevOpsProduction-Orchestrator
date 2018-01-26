@@ -1,0 +1,15 @@
+
+- hosts: all
+  #hosts: worker
+  #connection: local
+  become: yes
+  become_user: root
+  tasks:
+    - name: Deploy 
+      copy:
+        src: /opt/deploy/realtime_ml/
+        dest: /opt/devops/realtime_ml/
+        owner: root
+        group: root
+        mode: 0777
+        force: yes

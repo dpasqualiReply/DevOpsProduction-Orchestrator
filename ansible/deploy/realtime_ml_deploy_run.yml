@@ -19,3 +19,9 @@
         group: root
         mode: 0777
         force: yes
+
+    - name: Ensure Real Time ML service is running and start on boot
+      service:
+        name: devops-rtml
+        state: started
+        #enabled: yes

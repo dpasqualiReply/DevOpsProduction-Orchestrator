@@ -1,0 +1,18 @@
+
+- hosts: all
+  #hosts: worker
+  #connection: local
+  become: yes
+  become_user: root
+  tasks:
+  - import_playbook:
+      name: batch_etl_deploy.yml
+
+  - import_playbook:
+      name: batch_ml_deploy.yml
+
+  - import_playbook:
+      name: realtime_etl_deploy_run.yml
+
+  - import_playbook:
+      name: realtime_ml_deploy_run.yml

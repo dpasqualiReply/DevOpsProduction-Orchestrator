@@ -21,3 +21,18 @@
         group: root
         mode: 0777
         force: yes
+
+    - name: Ensure Kafka JDBC connector is running
+      service:
+        name: devops-kafka-jdbc-connector
+        state: started
+
+
+    - name: Ensure Real Time ETL services are running and start on boot
+      service:
+        name: "{{ item }}"
+        state: started
+        #enabled: yes
+      with_items:
+        - devops-rtetl-ratings
+        - devops-rtrtl-tags

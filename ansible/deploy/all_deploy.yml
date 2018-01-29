@@ -8,11 +8,3 @@
   - import_playbook:
       name: batch_etl_deploy.yml
 
-  - import_playbook:
-      name: batch_ml_deploy.yml
-
-  - import_playbook:
-      name: realtime_etl_deploy.yml
-
-  - import_playbook:
-      name: realtime_ml_deploy.yml

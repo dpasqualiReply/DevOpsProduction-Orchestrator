@@ -11,7 +11,7 @@
         state: stopped
       with_items:
         - devops-rtetl-ratings
-        - devops-rtrtl-tags
+        - devops-rtetl-tags
 
     - name: Deploy Real Time ETL in Production
       copy:

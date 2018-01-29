@@ -1,0 +1,9 @@
+- hosts: all
+  become: yes
+  become_user: root
+  tasks:
+    - name: Ensure "{{ service_pretty }}" is running and starts on boot
+      service:
+        name: "{{ service }}"
+        state: started
+        enabled: yes

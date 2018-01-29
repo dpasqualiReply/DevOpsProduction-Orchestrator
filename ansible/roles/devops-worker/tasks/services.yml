@@ -8,7 +8,8 @@
     owner: root
     group: root
   with_items:
-#    - devops-kafka-jdbc-connector.service
+     - devops-kafka-jdbc-connector.service
      - devops-rtetl-ratings.service
      - devops-rtetl-tags.service
-     - devops-rtml.service 
+     - devops-rtml.service
+#     - devops-confluent-schema-registry

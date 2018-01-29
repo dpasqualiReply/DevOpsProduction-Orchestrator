@@ -5,70 +5,14 @@
   become: yes
   become_user: root
   tasks:
-    - name: Deploy Batch ETL Process in Production
-      copy:
-        src: /opt/deploy/batch_etl/
-        dest: /opt/devops/batch_etl/
-        owner: root
-        group: root
-        mode: 0777
-        force: yes
+  - import_playbook:
+      name: batch_etl_deploy.yml
 
+  - import_playbook:
+      name: batch_ml_deploy.yml
 
-    - name: Deploy Batch ML in Production
-      copy:
-        src: /opt/deploy/batch_ml/
-        dest: /opt/devops/batch_ml/
-        owner: root
-        group: root
-        mode: 0777
-        force: yes
+  - import_playbook:
+      name: realtime_etl_deploy.yml
 
-
-    - name: Ensure Real Time ETL services are down
-      service:
-        name: "{{ item }}"
-        state: stopped
-      with_items:
-        - devops-rtetl-ratings
-        - devops-rtrtl-tags
-
-    - name: Deploy Real Time ETL in Production
-      copy:
-        src: /opt/deploy/realtime_etl/
-        dest: /opt/devops/realtime_etl/
-        owner: root
-        group: root
-        mode: 0777
-        force: yes
-
-    - name: Ensure Real Time ETL services are running and start on boot
-      service:
-        name: "{{ item }}"
-        state: started
-        enabled: yes
-      with_items:
-        - devops-rtetl-ratings
-        - devops-rtrtl-tags
-
-    - name: Ensure Real Time ML service is down
-      service:
-        name: devops-rtml
-        state: stopped
-      
-    - name: Deploy Real time ml webapp
-      copy:
-        src: /opt/deploy/realtime_ml/
-        dest: /opt/devops/realtime_ml/
-        owner: root
-        group: root
-        mode: 0777
-        force: yes
-
-    - name: Ensure Real Time ML service is running and start on boot
-      service:
-        name: devops-rtml
-        state: started
-        enabled: yes
-
-
+  - import_playbook:
+      name: realtime_ml_deploy.yml

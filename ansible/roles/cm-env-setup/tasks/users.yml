@@ -1,20 +1,5 @@
 ---
 
-- name: allow SSH root login
-  lineinfile:
-    path: /etc/ssh/sshd_config
-    regexp: '^{{ item }} '
-    line: '{{ item }} yes'
-  with_items:
-    - PermitRootLogin
-    - PasswordAuthentication
-
-- name: not allow empty password
-  lineinfile:
-    path: /etc/ssh/sshd_config
-    regexp: '^PermitEmptyPasswords '
-    line: 'PermitEmptyPasswords no'
-
 - name: Unlock process and open file number for cloudera users
   lineinfile:
     path: /etc/security/limits.conf

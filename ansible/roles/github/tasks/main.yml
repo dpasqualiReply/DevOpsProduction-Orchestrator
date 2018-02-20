@@ -1,0 +1,44 @@
+---
+# tasks file for github
+
+- name: Install Git
+  yum:
+    name: git
+    state: latest
+
+- name: Donwload Hub
+  get_url:
+     url: https://github.com/github/hub/releases/download/v2.3.0-pre10/hub-linux-386-2.3.0-pre10.tgz
+     dest: /opt/hub-linux-386-2.3.0-pre10.tgz
+     mode: 0440
+
+- name: Extract Hub tgz
+  unarchive:
+    src: /opt/hub-linux-386-2.3.0-pre10.tgz
+    dest: /opt/
+
+- name: Ensure Export file exists
+  copy:
+    content: ""
+    dest: /etc/profile.d/exports.sh
+    force: no
+    group: root
+    owner: root
+    mode: 0555
+
+- name: Export Hub home
+  lineinfile:
+    path: /etc/profile.d/exports.sh
+    state: present
+    insertafter: EOF
+    line: 'export HUB_HOME=/opt/hub-linux-386-2.3.0-pre10'
+
+- name: Alias Hub as Git
+  lineinfile:
+    path: /etc/profile.d/exports.sh
+    state: present
+    insertafter: EOF
+    line: 'alias git=$HUB_HOME/bin/hub'
+
+- name: Source evn variables
+  shell: /etc/profile.d/exports.sh
